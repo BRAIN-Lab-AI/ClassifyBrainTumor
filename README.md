@@ -96,29 +96,15 @@ The workflow of the enhanced brain tumor classification system is designed to im
     ```
 
 2. **Open the Colab Notebook**
-    Create a virtual environment and install the required dependencies.
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # On Windows use: venv\Scripts\activate
-    pip install -r requirements.txt
-    ```
+    - Click the link to open the notebook in Google Colab
+    - Enable GPU runtime
 
-3. **Train the Model:**
-    Configure the training parameters in the provided configuration file and run:
-    ```bash
-    python train.py --config configs/train_config.yaml
-    ```
+3. **Upload your Kaggle API token** `(kaggle.json)` to download the dataset
 
-4. **Generate Images:**
-    Once training is complete, use the inference script to generate images.
-    ```bash
-    python inference.py --checkpoint path/to/checkpoint.pt --input "A surreal landscape with mountains and rivers"
-    ```
+4. **Run the notebook cells sequentially**
+  
 
 ## Acknowledgments
-- **Open-Source Communities:** Thanks to the contributors of PyTorch, Hugging Face, and other libraries for their amazing work.
-- **Individuals:** Special thanks to bla, bla, bla for the amazing team effort, invaluable guidance and support throughout this project.
-- **Resource Providers:** Gratitude to ABC-organization for providing the computational resources necessary for this project.
-
+I would like to sincerely thank Professor Behzad Muzammil for his excellent explanation of deep learning principles, which provided me with the knowledge and inspiration necessary to successfully carry out this project.
 
 
