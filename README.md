@@ -1,16 +1,14 @@
 # Brain Tumor Detection and Classification using Deep Learning
 
-Below is a template for another sample project. Please follow this template.
-# [Deep Learning Project Template] Enhanced Stable Diffusion: A Deep Learning Approach for Artistic Image Generation
+# Enhancing Brain Tumor Detection in Low-Quality MRI Scans Using Transfer Learning
 
 ## Introduction
-Enhanced Stable Diffusion is a cutting-edge deep learning project that redefines artistic image generation by leveraging an advanced diffusion process to convert textual descriptions into high-quality images. By integrating a modified UNet architecture with innovative loss functions and enhanced data augmentation strategies, the model iteratively refines a latent noise vector conditioned on text embeddings to produce detailed and visually compelling artwork. This approach not only addresses common challenges such as slow inference times and output inconsistencies found in traditional diffusion models, but also pushes the boundaries of creative image synthesis, paving the way for novel applications in art, design, and multimedia content creation.
-
+This project develops a deep learning model aimed at accurately classifying brain tumors from MRI scans, focusing especially on cases with low-quality images. By improving existing transfer learning methods through changes in the model architecture and advanced data manipulation techniques—including both image augmentation and degradation—the approach achieves better diagnostic results. The performance of the enhanced model is tested across several tumor categories: normal, pituitary, meningioma, and glioma. This work aims to address common diagnostic challenges in under-resourced medical settings, making reliable brain tumor detection more accessible and effective.
 ## Project Metadata
 ### Authors
-- **Team:** Mohammad Ahmad, Umar Abdullah and Malik Hussain
+- Oulaya Elargab
 - **Supervisor Name:** Dr. Muzammil Behzad
-- **Affiliations:** SABIC, ARAMCO and KFUPM
+- **Affiliations:** KFUPM
 
 ### Project Documents
 - **Presentation:** [Project Presentation](/presentation.pptx)
