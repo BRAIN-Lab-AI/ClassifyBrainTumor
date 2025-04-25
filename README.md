@@ -24,70 +24,78 @@ This project develops a deep learning model aimed at accurately classifying brai
 ## Project Technicalities
 
 ### Terminologies
-- **Diffusion Model:** A generative model that progressively transforms random noise into coherent data.
-- **Latent Space:** A compressed, abstract representation of data where complex features are captured.
-- **UNet Architecture:** A neural network with an encoder-decoder structure featuring skip connections for better feature preservation.
-- **Text Encoder:** A model that converts text into numerical embeddings for downstream tasks.
-- **Perceptual Loss:** A loss function that measures high-level differences between images, emphasizing perceptual similarity.
-- **Tokenization:** The process of breaking down text into smaller units (tokens) for processing.
-- **Noise Vector:** A randomly generated vector used to initialize the diffusion process in generative models.
-- **Decoder:** A network component that transforms latent representations back into image space.
-- **Iterative Refinement:** The process of gradually improving the quality of generated data through multiple steps.
-- **Conditional Generation:** The process where outputs are generated based on auxiliary inputs, such as textual descriptions.
+- **MRI (Magnetic Resonance Imaging):** A non-invasive imaging technique used to visualize detailed internal structures, especially soft tissues like the brain.
+- **Brain Tumors (Glioma, Meningioma, Pituitary):** The project focuses on classifying MRI scans into three tumor types (glioma, meningioma, pituitary) and a "no tumor" category.
+- **Transfer Learning:** A technique where models pretrained on large datasets (e.g., ImageNet) are adapted to a new, domain-specific task by modifying and fine-tuning their architecture.
+- **Degraded Images:** Gaussian Noise: Random pixel noise mimicking sensor errors.
+Blurring: Simulating motion or focus loss. Downsampling: Reducing and re-scaling image resolution.
+- **Dropout:** A regularization technique that randomly disables a fraction of neurons during training to prevent overfitting.
 
 ### Problem Statements
-- **Problem 1:** Achieving high-resolution and detailed images using conventional diffusion models remains challenging.
-- **Problem 2:** Existing models suffer from slow inference times during the image generation process.
-- **Problem 3:** There is limited capability in performing style transfer and generating diverse artistic variations.
+- **Problem 1:** Dealing with poor-quality MRI scans commonly encountered in real clinical settings, where imaging artifacts such as noise, blur, and low resolution affect diagnosis accuracy.
+- **Problem 2:** Existing models struggle to maintain diagnostic reliability under practical clinical conditions, especially in resource-limited settings where imaging quality cannot always be assured.
+
 
 ### Loopholes or Research Areas
-- **Evaluation Metrics:** Lack of robust metrics to effectively assess the quality of generated images.
-- **Output Consistency:** Inconsistencies in output quality when scaling the model to higher resolutions.
-- **Computational Resources:** Training requires significant GPU compute resources, which may not be readily accessible.
+- **Evaluation Under Degraded Conditions:** Existing studies rarely evaluate model performance under realistic low-quality MRI conditions, limiting their clinical applicability.
+- **Generalization and Robustness:** Many transfer learning models struggle to maintain consistent performance across diverse and imperfect imaging data, leading to potential diagnostic errors.
+- **Resource Limitations in Deployment:** High-performing models often require computational resources that are impractical for use in under-resourced medical environments.
 
 ### Problem vs. Ideation: Proposed 3 Ideas to Solve the Problems
-1. **Optimized Architecture:** Redesign the model architecture to improve efficiency and balance image quality with faster inference.
-2. **Advanced Loss Functions:** Integrate novel loss functions (e.g., perceptual loss) to better capture artistic nuances and structural details.
-3. **Enhanced Data Augmentation:** Implement sophisticated data augmentation strategies to improve the model’s robustness and reduce overfitting.
+1. **Simulating Realistic Image Degradation:** Apply controlled degradation techniques (Gaussian noise, blurring, downsampling) to training data to simulate real-world MRI variability and train models to be resilient.
+2. **Enhancing Transfer Learning Architectures:** Deepen the classification head with additional dense layers and apply dropout regularization to improve the model’s learning capacity and generalization across challenging conditions.
+3. **Adopting Lightweight Fine-Tuning Strategies** Freeze pretrained base layers and fine-tune only the added classification layers with minimal computational overhead, enabling practical deployment even in environments with limited hardware resources.
 
 ### Proposed Solution: Code-Based Implementation
-This repository provides an implementation of the enhanced stable diffusion model using PyTorch. The solution includes:
+This repository provides an implementation of enhanced transfer learning models for brain tumor classification using TensorFlow/Keras.
+The solution addresses real-world challenges by simulating degraded MRI images and optimizing model robustness.
 
-- **Modified UNet Architecture:** Incorporates residual connections and efficient convolutional blocks.
-- **Novel Loss Functions:** Combines Mean Squared Error (MSE) with perceptual loss to enhance feature learning.
-- **Optimized Training Loop:** Reduces computational overhead while maintaining performance.
+- **Enhanced Transfer Learning Architectures:** Pretrained models (VGG16, VGG19, ResNet50V2) are adapted with deeper classification heads and dropout regularization to improve feature learning and generalization.
+- **Degradation Simulation Pipeline:** Controlled degradation techniques (Gaussian noise, blurring, downsampling) are applied to MRI scans to simulate real-world imaging imperfections during training.
+- **Optimized Training Strategy:** Fine-tuning strategies minimize computational cost by freezing base layers and training only newly added dense layers, using early stopping and learning rate scheduling.
+
 
 ### Key Components
-- **`model.py`**: Contains the modified UNet architecture and other model components.
-- **`train.py`**: Script to handle the training process with configurable parameters.
-- **`utils.py`**: Utility functions for data processing, augmentation, and metric evaluations.
-- **`inference.py`**: Script for generating images using the trained model.
+- **`brain_tumor_classification.ipynb`**: The main Google Colab notebook containing all code for the project, including:
+   - Loading and degrading MRI images
+   - Building and training baseline and enhanced transfer learning models
+   - Evaluating classification performance with accuracy, F1-score, and confusion matrices
+- **Dataset Access**: To download the dataset from Kaggle in Colab:
+   1. **Create a Kaggle API token**: 
+         - Go to your Kaggle account:https://www.kaggle.com/account
+         - Scroll down to **API** section and click **"Create New API Token"**
+         - This will download a file named `kaggle.json`
+   2. **Upload** the `kaggle.json` file in the notebook
 
 ## Model Workflow
-The workflow of the Enhanced Stable Diffusion model is designed to translate textual descriptions into high-quality artistic images through a multi-step diffusion process:
+The workflow of the enhanced brain tumor classification system is designed to improve model resilience under degraded imaging conditions through careful data processing, model fine-tuning, and evaluation:
 
 1. **Input:**
-   - **Text Prompt:** The model takes a text prompt (e.g., "A surreal landscape with mountains and rivers") as the primary input.
-   - **Tokenization:** The text prompt is tokenized and processed through a text encoder (such as a CLIP model) to obtain meaningful embeddings.
-   - **Latent Noise:** A random latent noise vector is generated to initialize the diffusion process, which is then conditioned on the text embeddings.
+   - **MRI Images:** Grayscale MRI scans resized to 224×224 pixels.
+   - **Data Augmentation:** Randomized image degradation is applied to simulate real-world variability.
+   - **Label Encoding:** Tumor classes (glioma, meningioma, pituitary tumor, no tumor) are encoded for multi-class classification.
 
-2. **Diffusion Process:**
-   - **Iterative Refinement:** The conditioned latent vector is fed into a modified UNet architecture. The model iteratively refines this vector by reversing a diffusion process, gradually reducing noise while preserving the text-conditioned features.
-   - **Intermediate States:** At each step, intermediate latent representations are produced that increasingly capture the structure and details dictated by the text prompt.
+2. **Training Process:**
+   - **Feature Extraction:** Pretrained convolutional layers (frozen) extract key features from input images.
+   - **Classification Head:** Enhanced dense layers with dropout refine the extracted features for final classification.
+   - **Optimization:** Categorical cross-entropy loss and Adam optimizer guide the model during training, with real-time augmentation to enhance robustness.
+   - **Validation Monitoring:** Validation loss and accuracy are tracked to apply early stopping and prevent overfitting.
 
-3. **Output:**
-   - **Decoding:** The final refined latent representation is passed through a decoder (often part of a Variational Autoencoder setup) to generate the final image.
-   - **Generated Image:** The output is a synthesized image that visually represents the input text prompt, complete with artistic style and detail.
+3. **Evaluation:**
+   - **Performance Metrics:** Model performance is assessed using accuracy, class-wise F1-scores, and confusion matrices.
+   - **Robustness Testing:** Models are evaluated on both clean and degraded MRI datasets to verify real-world applicability.
+
 
 ## How to Run the Code
 
 1. **Clone the Repository:**
     ```bash
-    git clone https://github.com/yourusername/enhanced-stable-diffusion.git
-    cd enhanced-stable-diffusion
+    git clone https://github.com/oulaya-arg/brain-tumor-mri-classification.git
+   cd brain-tumor-mri-classification
+
     ```
 
-2. **Set Up the Environment:**
+2. **Open the Colab Notebook**
     Create a virtual environment and install the required dependencies.
     ```bash
     python3 -m venv venv
