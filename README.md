@@ -15,7 +15,7 @@ This project develops a deep learning model aimed at accurately classifying brai
 - **Report:** [Project Report](/report.pdf)
 
 ### Reference Paper
-- [High-Resolution Image Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2112.10752)
+- [Brain Tumor Classification using Deep Learning Algorithms][https://arxiv.org/abs/2112.10752](https://www.ijraset.com/best-journal/brain-tumor-classification-using-deep-learning-algorithms)
 
 ### Reference Dataset
 - [LAION-5B Dataset](https://laion.ai/blog/laion-5b/)
