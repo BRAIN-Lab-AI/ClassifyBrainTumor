@@ -12,7 +12,7 @@ This project develops a deep learning model aimed at accurately classifying brai
 
 ### Project Documents
 - **Presentation:** [Project Presentation](/presentation.pptx)
-- **Report:** [Project Report](/report.pdf)
+- **Report:** [Project Report](/Report_DL_BrainTumorClassifier_Oulaya (2).pdf)
 
 ### Reference Paper
 - [Brain Tumor Classification using Deep Learning Algorithms][https://arxiv.org/abs/2112.10752](https://www.ijraset.com/best-journal/brain-tumor-classification-using-deep-learning-algorithms)
